@@ -12,21 +12,21 @@ export default function Dashboard() {
       <Sidebar />
 
       {/* Main Content */}
-      <main className="ml-[72px] flex-1 p-6 lg:p-8">
+      <main className="w-full md:ml-[72px] flex-1 p-4 pt-16 md:pt-6 md:p-6 lg:p-8">
         {/* Top Header */}
-        <header className="flex items-center justify-between mb-8">
+        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 md:mb-8">
           <div>
-            <h1 className="font-syne text-2xl font-bold text-text-primary">
+            <h1 className="font-heading text-xl md:text-2xl font-bold text-text-primary">
               Inventory Dashboard
             </h1>
-            <p className="text-sm text-text-secondary mt-1">
+            <p className="text-xs md:text-sm text-text-secondary mt-1">
               Manage and monitor your stock in real-time
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Search */}
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-none">
               <Search
                 size={16}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
@@ -34,22 +34,22 @@ export default function Dashboard() {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-56 pl-9 pr-4 py-2 bg-background-card border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-lime/30 transition-colors"
+                className="w-full sm:w-56 pl-9 pr-4 py-2 bg-background-card border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-lime/30 transition-colors"
               />
             </div>
 
             {/* Add Button */}
-            <button className="flex items-center gap-2 px-4 py-2 bg-accent-lime text-background-main rounded-xl text-sm font-semibold hover:bg-accent-lime/90 transition-colors">
+            <button className="flex-shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 bg-accent-lime text-background-main rounded-xl text-sm font-semibold hover:bg-accent-lime/90 transition-colors">
               <Plus size={16} />
-              Add Item
+              <span className="hidden sm:inline">Add Item</span>
             </button>
           </div>
         </header>
 
         {/* Content Grid */}
-        <div className="flex gap-6">
+        <div className="flex flex-col xl:flex-row gap-4 md:gap-6">
           {/* Left Section - Main Content */}
-          <div className="flex-1 space-y-6 min-w-0">
+          <div className="flex-1 space-y-4 md:space-y-6 min-w-0">
             {/* Stat Cards */}
             <StatCards />
 
@@ -57,8 +57,8 @@ export default function Dashboard() {
             <ProductTable />
           </div>
 
-          {/* Right Panel */}
-          <aside className="w-72 flex-shrink-0 space-y-4 hidden xl:block">
+          {/* Right Panel - visible on all screens, stacks below on mobile */}
+          <aside className="w-full xl:w-72 flex-shrink-0 space-y-4">
             <CategoryBreakdown />
             <AlertsPanel />
           </aside>

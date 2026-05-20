@@ -28,7 +28,7 @@ function StatCard({
   };
 
   return (
-    <div className="relative bg-background-card border border-border rounded-2xl p-5 flex flex-col gap-3 overflow-hidden group hover:border-border-hover transition-all duration-300">
+    <div className="relative bg-background-card border border-border rounded-2xl p-4 md:p-5 flex flex-col gap-3 overflow-hidden group hover:border-border-hover transition-all duration-300">
       {/* Accent bar on right */}
       <div
         className="absolute right-0 top-3 bottom-3 w-[3px] rounded-l-full"
@@ -41,7 +41,7 @@ function StatCard({
           {icon}
         </div>
         <span
-          className={`text-xs font-mono px-2 py-0.5 rounded-full ${changeColors[changeType]}`}
+          className={`text-[10px] md:text-xs font-mono px-2 py-0.5 rounded-full ${changeColors[changeType]}`}
         >
           {change}
         </span>
@@ -49,10 +49,12 @@ function StatCard({
 
       {/* Content */}
       <div>
-        <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">
+        <p className="text-text-secondary text-[10px] md:text-xs uppercase tracking-wider mb-1">
           {title}
         </p>
-        <p className="text-2xl font-syne font-bold text-text-primary">{value}</p>
+        <p className="text-xl md:text-2xl font-heading font-bold text-text-primary">
+          {value}
+        </p>
       </div>
     </div>
   );
@@ -100,7 +102,7 @@ export default function StatCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
       {stats.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}

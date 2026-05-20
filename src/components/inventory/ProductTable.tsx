@@ -27,10 +27,10 @@ function StatusPill({ status }: { status: ProductStatus }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${styles[status]}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] md:text-xs font-medium whitespace-nowrap ${styles[status]}`}
     >
       <span
-        className={`w-1.5 h-1.5 rounded-full ${
+        className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
           status === "active"
             ? "bg-status-active"
             : status === "low"
@@ -53,14 +53,63 @@ function StockBar({ stock, maxStock }: { stock: number; maxStock: number }) {
       : "bg-status-out";
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden">
+    <div className="flex items-center gap-2 md:gap-3">
+      <div className="w-12 md:w-16 h-1.5 bg-white/5 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-500 ${barColor}`}
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <span className="font-mono text-sm text-text-secondary">{stock}</span>
+      <span className="font-mono text-xs md:text-sm text-text-secondary">
+        {stock}
+      </span>
+    </div>
+  );
+}
+
+/* Mobile card view for small screens */
+function ProductCard({ product }: { product: Product }) {
+  const percentage = Math.min((product.stock / product.maxStock) * 100, 100);
+  const barColor =
+    percentage > 50
+      ? "bg-status-active"
+      : percentage > 20
+      ? "bg-status-low"
+      : "bg-status-out";
+
+  return (
+    <div className="p-4 border-b border-border/50 last:border-b-0">
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-text-primary truncate">
+            {product.name}
+          </p>
+          <p className="text-[10px] font-mono text-text-muted mt-0.5">
+            {product.sku}
+          </p>
+        </div>
+        <StatusPill status={product.status} />
+      </div>
+      <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted">{product.category}</span>
+          <span className="text-text-muted">·</span>
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-1.5 bg-white/5 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full ${barColor}`}
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+            <span className="text-xs font-mono text-text-secondary">
+              {product.stock}
+            </span>
+          </div>
+        </div>
+        <span className="font-mono text-xs text-text-primary">
+          {formatCurrency(product.price)}
+        </span>
+      </div>
     </div>
   );
 }
@@ -76,8 +125,8 @@ export default function ProductTable() {
   return (
     <div className="bg-background-card border border-border rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-        <h2 className="font-syne font-semibold text-lg text-text-primary">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 md:px-6 py-4 border-b border-border">
+        <h2 className="font-heading font-semibold text-base md:text-lg text-text-primary">
           Inventory
         </h2>
 
@@ -99,8 +148,15 @@ export default function ProductTable() {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
+      {/* Mobile Card View */}
+      <div className="md:hidden">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
@@ -143,7 +199,10 @@ export default function ProductTable() {
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  <StockBar stock={product.stock} maxStock={product.maxStock} />
+                  <StockBar
+                    stock={product.stock}
+                    maxStock={product.maxStock}
+                  />
                 </td>
                 <td className="px-6 py-4">
                   <StatusPill status={product.status} />
@@ -160,8 +219,8 @@ export default function ProductTable() {
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-3 border-t border-border flex items-center justify-between">
-        <span className="text-xs text-text-muted">
+      <div className="px-4 md:px-6 py-3 border-t border-border flex items-center justify-between">
+        <span className="text-[10px] md:text-xs text-text-muted">
           Showing {filteredProducts.length} of {products.length} items
         </span>
       </div>

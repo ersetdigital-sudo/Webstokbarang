@@ -8,7 +8,7 @@ export default function AlertsPanel() {
     <div className="bg-background-card border border-border rounded-2xl p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-syne font-semibold text-sm text-text-primary">
+        <h3 className="font-heading font-semibold text-sm text-text-primary">
           Alerts
         </h3>
         <div className="relative">

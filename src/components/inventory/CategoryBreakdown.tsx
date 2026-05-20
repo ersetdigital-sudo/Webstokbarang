@@ -7,7 +7,7 @@ export default function CategoryBreakdown() {
 
   return (
     <div className="bg-background-card border border-border rounded-2xl p-5">
-      <h3 className="font-syne font-semibold text-sm text-text-primary mb-4">
+      <h3 className="font-heading font-semibold text-sm text-text-primary mb-4">
         Categories
       </h3>
 

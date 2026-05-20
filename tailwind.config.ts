@@ -35,8 +35,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        syne: ["Syne", "sans-serif"],
-        mono: ["DM Mono", "monospace"],
+        heading: ["Space Grotesk", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
       borderRadius: {
         xl: "12px",
