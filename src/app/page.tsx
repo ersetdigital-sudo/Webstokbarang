@@ -7,54 +7,52 @@ import { Search, Plus } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-surface-primary">
+    <div className="min-h-screen bg-bg-primary">
       <Sidebar />
 
-      {/* Konten utama */}
-      <main className="lg:ml-[78px] min-h-screen px-4 pt-20 pb-8 sm:px-6 lg:px-8 lg:pt-8">
-        {/* Header */}
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
-          <div>
-            <h1 className="font-heading text-[22px] sm:text-[26px] font-bold text-content-primary tracking-tight">
-              Dashboard Inventaris
-            </h1>
-            <p className="text-[13px] text-content-tertiary mt-1">
-              Kelola dan pantau stok barang secara real-time
-            </p>
-          </div>
+      <main className="lg:ml-16 min-h-screen">
+        {/* Top bar */}
+        <header className="sticky top-0 z-40 bg-bg-primary/80 backdrop-blur-xl border-b border-border px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 pt-0 lg:pt-0">
+            {/* Left spacer for mobile hamburger */}
+            <div className="w-10 lg:w-0" />
 
-          <div className="flex items-center gap-2.5">
-            {/* Pencarian */}
-            <div className="relative flex-1 sm:flex-none">
-              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-content-tertiary" />
-              <input
-                type="text"
-                placeholder="Cari barang..."
-                className="w-full sm:w-52 pl-9 pr-4 py-2.5 bg-surface-secondary border border-line-primary rounded-xl text-[13px] text-content-primary placeholder:text-content-tertiary focus:outline-none focus:border-lime-accent/30 focus:ring-1 focus:ring-lime-accent/10 transition-all"
-              />
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+                <input
+                  type="text"
+                  placeholder="Cari barang..."
+                  className="w-40 sm:w-52 pl-8 pr-3 py-2 bg-bg-card border border-border rounded-lg text-[12px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent/40 transition-colors"
+                />
+              </div>
+              <button className="flex items-center gap-1.5 px-3 py-2 bg-accent text-bg-primary rounded-lg text-[12px] font-semibold hover:brightness-110 active:scale-95 transition-all">
+                <Plus size={14} strokeWidth={2.5} />
+                <span className="hidden sm:inline">Tambah</span>
+              </button>
             </div>
-
-            {/* Tombol tambah */}
-            <button className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-lime-accent text-surface-primary rounded-xl text-[13px] font-semibold hover:brightness-110 active:scale-[0.97] transition-all">
-              <Plus size={15} strokeWidth={2.5} />
-              <span className="hidden sm:inline">Tambah</span>
-            </button>
           </div>
         </header>
 
-        {/* Grid layout */}
-        <div className="flex flex-col xl:flex-row gap-5 lg:gap-6">
-          {/* Kiri: Cards + Tabel */}
-          <div className="flex-1 min-w-0 space-y-5 lg:space-y-6">
-            <StatCards />
-            <ProductTable />
+        {/* Content */}
+        <div className="px-4 sm:px-6 lg:px-8 py-6">
+          {/* Page title */}
+          <div className="mb-6">
+            <h1 className="text-xl sm:text-2xl font-heading font-bold text-text-primary">Dashboard</h1>
+            <p className="text-[13px] text-text-muted mt-0.5">Pantau inventaris dan stok barang</p>
           </div>
 
-          {/* Kanan: Kategori + Peringatan */}
-          <aside className="w-full xl:w-[290px] flex-shrink-0 space-y-4">
-            <CategoryBreakdown />
-            <AlertsPanel />
-          </aside>
+          {/* Grid */}
+          <div className="flex flex-col xl:flex-row gap-6">
+            <div className="flex-1 min-w-0 space-y-6">
+              <StatCards />
+              <ProductTable />
+            </div>
+            <aside className="w-full xl:w-[280px] flex-shrink-0 space-y-4">
+              <CategoryBreakdown />
+              <AlertsPanel />
+            </aside>
+          </div>
         </div>
       </main>
     </div>

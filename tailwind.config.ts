@@ -9,42 +9,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        surface: {
-          primary: "#0D0F12",
-          secondary: "#13151A",
-          tertiary: "#181B21",
-          sidebar: "#0A0C0F",
+        bg: {
+          primary: "#09090b",
+          card: "#111113",
+          elevated: "#18181b",
+          hover: "#1c1c1f",
+          sidebar: "#0c0c0e",
         },
-        lime: {
-          accent: "#C6FF80",
-          dim: "rgba(198, 255, 128, 0.08)",
-          glow: "rgba(198, 255, 128, 0.15)",
+        accent: "#a3e635",
+        "accent-muted": "rgba(163, 230, 53, 0.08)",
+        "accent-subtle": "rgba(163, 230, 53, 0.15)",
+        border: {
+          DEFAULT: "#27272a",
+          subtle: "#1f1f23",
+          hover: "#3f3f46",
         },
-        state: {
-          success: "#C6FF80",
-          warning: "#FFCC66",
-          danger: "#FF8080",
-          info: "#80D4FF",
+        text: {
+          primary: "#fafafa",
+          secondary: "#a1a1aa",
+          muted: "#71717a",
         },
-        line: {
-          primary: "#1E2028",
-          secondary: "#282B33",
-          hover: "#32363F",
-        },
-        content: {
-          primary: "#F5F5F5",
-          secondary: "#9CA3AF",
-          tertiary: "#6B7280",
-          inverse: "#0D0F12",
-        },
+        green: { DEFAULT: "#4ade80", muted: "rgba(74, 222, 128, 0.1)" },
+        yellow: { DEFAULT: "#facc15", muted: "rgba(250, 204, 21, 0.1)" },
+        red: { DEFAULT: "#f87171", muted: "rgba(248, 113, 113, 0.1)" },
+        blue: { DEFAULT: "#60a5fa", muted: "rgba(96, 165, 250, 0.1)" },
       },
       fontFamily: {
+        sans: ['"Inter"', "system-ui", "sans-serif"],
         heading: ['"Space Grotesk"', "sans-serif"],
-        body: ['"Inter"', "sans-serif"],
         mono: ['"JetBrains Mono"', "monospace"],
-      },
-      animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },

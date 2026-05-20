@@ -4,145 +4,117 @@ import { useState } from "react";
 import { products, type Product, type ProductStatus } from "@/data/products";
 import { formatCurrency } from "@/lib/utils";
 
-type FilterType = "all" | "low" | "out";
+type Filter = "all" | "low" | "out";
 
-const filters: { label: string; value: FilterType }[] = [
+const tabs: { label: string; value: Filter }[] = [
   { label: "Semua", value: "all" },
-  { label: "Stok Menipis", value: "low" },
-  { label: "Stok Habis", value: "out" },
+  { label: "Menipis", value: "low" },
+  { label: "Habis", value: "out" },
 ];
 
-function StatusBadge({ status }: { status: ProductStatus }) {
-  const config = {
-    active: { bg: "bg-state-success/10", text: "text-state-success", dot: "bg-state-success", label: "Tersedia" },
-    low: { bg: "bg-state-warning/10", text: "text-state-warning", dot: "bg-state-warning", label: "Menipis" },
-    out: { bg: "bg-state-danger/10", text: "text-state-danger", dot: "bg-state-danger", label: "Habis" },
-  };
-  const c = config[status];
+const statusMap: Record<ProductStatus, { label: string; cls: string }> = {
+  active: { label: "Tersedia", cls: "text-green bg-green-muted" },
+  low: { label: "Menipis", cls: "text-yellow bg-yellow-muted" },
+  out: { label: "Habis", cls: "text-red bg-red-muted" },
+};
 
+function Badge({ status }: { status: ProductStatus }) {
+  const s = statusMap[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium ${c.bg} ${c.text}`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${c.dot}`} />
-      {c.label}
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${s.cls}`}>
+      {s.label}
     </span>
   );
 }
 
-function StockIndicator({ stock, maxStock }: { stock: number; maxStock: number }) {
-  const pct = maxStock > 0 ? Math.min((stock / maxStock) * 100, 100) : 0;
-  const color = pct > 50 ? "bg-state-success" : pct > 15 ? "bg-state-warning" : "bg-state-danger";
-
+function MobileRow({ p }: { p: Product }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <div className="w-16 h-[5px] bg-surface-tertiary rounded-full overflow-hidden">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
-      </div>
-      <span className="font-mono text-xs text-content-secondary min-w-[28px]">{stock}</span>
-    </div>
-  );
-}
-
-function MobileCard({ product }: { product: Product }) {
-  const pct = product.maxStock > 0 ? Math.min((product.stock / product.maxStock) * 100, 100) : 0;
-  const color = pct > 50 ? "bg-state-success" : pct > 15 ? "bg-state-warning" : "bg-state-danger";
-
-  return (
-    <div className="px-4 py-4 border-b border-line-primary/60 last:border-b-0 hover:bg-surface-tertiary/30 transition-colors">
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-medium text-content-primary truncate">{product.name}</p>
-          <p className="text-[11px] font-mono text-content-tertiary mt-0.5">{product.sku}</p>
+    <div className="flex items-center justify-between py-3 border-b border-border-subtle last:border-0">
+      <div className="min-w-0 flex-1">
+        <p className="text-[13px] font-medium text-text-primary truncate">{p.name}</p>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-[11px] font-mono text-text-muted">{p.sku}</span>
+          <Badge status={p.status} />
         </div>
-        <StatusBadge status={product.status} />
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-[11px] text-content-tertiary px-2 py-0.5 rounded-md bg-surface-tertiary">
-            {product.category}
-          </span>
-          <div className="flex items-center gap-1.5">
-            <div className="w-8 h-1 bg-surface-tertiary rounded-full overflow-hidden">
-              <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
-            </div>
-            <span className="text-[11px] font-mono text-content-secondary">{product.stock}</span>
-          </div>
-        </div>
-        <span className="font-mono text-xs font-medium text-content-primary">
-          {formatCurrency(product.price)}
-        </span>
+      <div className="text-right pl-3">
+        <p className="text-[13px] font-mono font-medium text-text-primary">{formatCurrency(p.price)}</p>
+        <p className="text-[11px] text-text-muted mt-0.5">Stok: {p.stock}</p>
       </div>
     </div>
   );
 }
 
 export default function ProductTable() {
-  const [active, setActive] = useState<FilterType>("all");
-  const filtered = active === "all" ? products : products.filter((p) => p.status === active);
+  const [filter, setFilter] = useState<Filter>("all");
+  const list = filter === "all" ? products : products.filter((p) => p.status === filter);
 
   return (
-    <div className="bg-surface-secondary border border-line-primary rounded-2xl overflow-hidden">
+    <div className="bg-bg-card border border-border rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 border-b border-line-primary">
-        <h2 className="font-heading font-semibold text-[15px] text-content-primary">
-          Daftar Inventaris
-        </h2>
-        <div className="flex items-center gap-1.5">
-          {filters.map((f) => (
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 border-b border-border">
+        <h2 className="text-[14px] font-heading font-semibold text-text-primary">Daftar Inventaris</h2>
+        <div className="flex gap-1 p-0.5 bg-bg-elevated rounded-lg">
+          {tabs.map((t) => (
             <button
-              key={f.value}
-              onClick={() => setActive(f.value)}
-              className={`px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all border ${
-                active === f.value
-                  ? "bg-lime-dim text-lime-accent border-lime-accent/20"
-                  : "text-content-tertiary hover:text-content-secondary border-transparent hover:bg-surface-tertiary"
+              key={t.value}
+              onClick={() => setFilter(t.value)}
+              className={`px-3 py-1.5 text-[11px] font-medium rounded-md transition-all ${
+                filter === t.value
+                  ? "bg-bg-card text-text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-secondary"
               }`}
             >
-              {f.label}
+              {t.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Mobile view */}
-      <div className="md:hidden">
-        {filtered.length === 0 ? (
-          <p className="text-center py-8 text-content-tertiary text-sm">Tidak ada data</p>
+      {/* Mobile */}
+      <div className="md:hidden px-4 py-1">
+        {list.length === 0 ? (
+          <p className="py-8 text-center text-text-muted text-sm">Tidak ada data</p>
         ) : (
-          filtered.map((p) => <MobileCard key={p.id} product={p} />)
+          list.map((p) => <MobileRow key={p.id} p={p} />)
         )}
       </div>
 
-      {/* Desktop table */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full">
+      {/* Desktop */}
+      <div className="hidden md:block">
+        <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-line-primary">
-              <th className="text-left px-5 py-3 text-[11px] font-medium text-content-tertiary uppercase tracking-wider">Barang</th>
-              <th className="text-left px-5 py-3 text-[11px] font-medium text-content-tertiary uppercase tracking-wider">Kategori</th>
-              <th className="text-left px-5 py-3 text-[11px] font-medium text-content-tertiary uppercase tracking-wider">Stok</th>
-              <th className="text-left px-5 py-3 text-[11px] font-medium text-content-tertiary uppercase tracking-wider">Status</th>
-              <th className="text-right px-5 py-3 text-[11px] font-medium text-content-tertiary uppercase tracking-wider">Harga</th>
+            <tr className="text-[11px] uppercase tracking-wider text-text-muted border-b border-border-subtle">
+              <th className="px-4 py-2.5 font-medium">Barang</th>
+              <th className="px-4 py-2.5 font-medium">Kategori</th>
+              <th className="px-4 py-2.5 font-medium">Stok</th>
+              <th className="px-4 py-2.5 font-medium">Status</th>
+              <th className="px-4 py-2.5 font-medium text-right">Harga</th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((product) => (
-              <tr key={product.id} className="border-b border-line-primary/40 hover:bg-surface-tertiary/20 transition-colors">
-                <td className="px-5 py-3.5">
-                  <p className="text-[13px] font-medium text-content-primary">{product.name}</p>
-                  <p className="text-[11px] font-mono text-content-tertiary mt-0.5">{product.sku}</p>
+            {list.map((p) => (
+              <tr key={p.id} className="border-b border-border-subtle last:border-0 hover:bg-bg-hover/50 transition-colors">
+                <td className="px-4 py-3">
+                  <p className="text-[13px] font-medium text-text-primary">{p.name}</p>
+                  <p className="text-[11px] font-mono text-text-muted">{p.sku}</p>
                 </td>
-                <td className="px-5 py-3.5">
-                  <span className="text-[12px] text-content-secondary">{product.category}</span>
+                <td className="px-4 py-3 text-[12px] text-text-secondary">{p.category}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-12 h-1 bg-bg-elevated rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          p.stock / p.maxStock > 0.5 ? "bg-green" : p.stock / p.maxStock > 0.15 ? "bg-yellow" : "bg-red"
+                        }`}
+                        style={{ width: `${Math.min((p.stock / p.maxStock) * 100, 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-[12px] font-mono text-text-secondary">{p.stock}</span>
+                  </div>
                 </td>
-                <td className="px-5 py-3.5">
-                  <StockIndicator stock={product.stock} maxStock={product.maxStock} />
-                </td>
-                <td className="px-5 py-3.5">
-                  <StatusBadge status={product.status} />
-                </td>
-                <td className="px-5 py-3.5 text-right">
-                  <span className="font-mono text-[12px] text-content-primary">{formatCurrency(product.price)}</span>
-                </td>
+                <td className="px-4 py-3"><Badge status={p.status} /></td>
+                <td className="px-4 py-3 text-right text-[12px] font-mono text-text-primary">{formatCurrency(p.price)}</td>
               </tr>
             ))}
           </tbody>
@@ -150,10 +122,8 @@ export default function ProductTable() {
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-3 border-t border-line-primary">
-        <p className="text-[11px] text-content-tertiary">
-          Menampilkan {filtered.length} dari {products.length} barang
-        </p>
+      <div className="px-4 py-2.5 border-t border-border-subtle">
+        <p className="text-[11px] text-text-muted">{list.length} dari {products.length} barang</p>
       </div>
     </div>
   );

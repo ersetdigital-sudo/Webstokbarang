@@ -4,77 +4,44 @@ import { Package, TrendingUp, AlertTriangle, XCircle } from "lucide-react";
 import { products } from "@/data/products";
 import { formatCurrencyShort, formatNumber } from "@/lib/utils";
 
-interface StatCardProps {
+interface CardData {
   label: string;
   value: string;
-  subtext: string;
+  sub: string;
   icon: React.ReactNode;
 }
 
-function StatCard({ label, value, subtext, icon }: StatCardProps) {
+function Card({ label, value, sub, icon }: CardData) {
   return (
-    <div className="bg-surface-secondary border border-line-primary rounded-xl p-4 sm:p-5 hover:border-line-secondary transition-colors duration-200">
-      {/* Label row */}
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-[12px] sm:text-[13px] text-content-tertiary font-medium">
-          {label}
-        </span>
-        <div className="text-content-tertiary opacity-60">
-          {icon}
-        </div>
+    <div className="flex flex-col justify-between p-4 bg-bg-card border border-border rounded-xl hover:border-border-hover transition-colors">
+      <div className="flex items-center justify-between">
+        <span className="text-[12px] font-medium text-text-muted uppercase tracking-wide">{label}</span>
+        <span className="text-text-muted/50">{icon}</span>
       </div>
-
-      {/* Value - large number */}
-      <p className="text-[22px] sm:text-[28px] font-heading font-bold text-content-primary leading-none tracking-tight">
-        {value}
-      </p>
-
-      {/* Subtext */}
-      <p className="text-[11px] sm:text-[12px] text-content-tertiary mt-2 font-mono">
-        {subtext}
-      </p>
+      <div className="mt-3">
+        <p className="text-[24px] leading-none font-heading font-bold text-text-primary">{value}</p>
+        <p className="text-[11px] text-text-muted mt-1.5 font-mono">{sub}</p>
+      </div>
     </div>
   );
 }
 
 export default function StatCards() {
-  const totalSKUs = products.length;
-  const totalValue = products.reduce((sum, p) => sum + p.price * p.stock, 0);
-  const lowStock = products.filter((p) => p.status === "low").length;
-  const outOfStock = products.filter((p) => p.status === "out").length;
+  const total = products.length;
+  const value = products.reduce((s, p) => s + p.price * p.stock, 0);
+  const low = products.filter((p) => p.status === "low").length;
+  const out = products.filter((p) => p.status === "out").length;
 
-  const cards: StatCardProps[] = [
-    {
-      label: "Total SKU",
-      value: formatNumber(totalSKUs),
-      subtext: "+3 dari minggu lalu",
-      icon: <Package size={16} />,
-    },
-    {
-      label: "Total Nilai Inventaris",
-      value: formatCurrencyShort(totalValue),
-      subtext: "+12.5% dari bulan lalu",
-      icon: <TrendingUp size={16} />,
-    },
-    {
-      label: "Stok Menipis",
-      value: formatNumber(lowStock),
-      subtext: "Perlu restock segera",
-      icon: <AlertTriangle size={16} />,
-    },
-    {
-      label: "Stok Habis",
-      value: formatNumber(outOfStock),
-      subtext: "3 barang tidak tersedia",
-      icon: <XCircle size={16} />,
-    },
+  const data: CardData[] = [
+    { label: "Total SKU", value: formatNumber(total), sub: "+3 minggu ini", icon: <Package size={15} /> },
+    { label: "Nilai Inventaris", value: formatCurrencyShort(value), sub: "+12% bulan ini", icon: <TrendingUp size={15} /> },
+    { label: "Stok Menipis", value: formatNumber(low), sub: "Perlu restock", icon: <AlertTriangle size={15} /> },
+    { label: "Stok Habis", value: formatNumber(out), sub: `${out} barang kosong`, icon: <XCircle size={15} /> },
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-      {cards.map((card, i) => (
-        <StatCard key={i} {...card} />
-      ))}
+      {data.map((d, i) => <Card key={i} {...d} />)}
     </div>
   );
 }
