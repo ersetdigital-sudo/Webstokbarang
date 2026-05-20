@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Package,
@@ -11,18 +13,26 @@ import {
   Boxes,
   Menu,
   X,
+  type LucideIcon,
 } from "lucide-react";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: Package, label: "Produk", active: false },
-  { icon: BarChart3, label: "Analitik", active: false },
-  { icon: Truck, label: "Pengiriman", active: false },
-  { icon: Settings, label: "Pengaturan", active: false },
+interface MenuItem {
+  icon: LucideIcon;
+  label: string;
+  href: string;
+}
+
+const menuItems: MenuItem[] = [
+  { icon: LayoutDashboard, label: "Dashboard", href: "/" },
+  { icon: Package, label: "Produk", href: "/produk" },
+  { icon: BarChart3, label: "Analitik", href: "/analitik" },
+  { icon: Truck, label: "Pengiriman", href: "/pengiriman" },
+  { icon: Settings, label: "Pengaturan", href: "/pengaturan" },
 ];
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -56,14 +66,14 @@ export default function Sidebar() {
       >
         {/* Header sidebar */}
         <div className="flex items-center justify-between px-5 lg:justify-center lg:px-0 mb-8">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
             <div className="w-10 h-10 rounded-xl bg-lime-dim flex items-center justify-center">
               <Boxes size={20} className="text-lime-accent" />
             </div>
             <span className="font-heading font-bold text-sm text-content-primary lg:hidden">
               StokBarang
             </span>
-          </div>
+          </Link>
           <button
             onClick={() => setOpen(false)}
             className="w-8 h-8 rounded-lg flex items-center justify-center text-content-tertiary hover:text-content-primary hover:bg-surface-tertiary transition-all lg:hidden"
@@ -79,30 +89,33 @@ export default function Sidebar() {
 
         {/* Navigasi */}
         <nav className="flex-1 flex flex-col gap-1 px-3 lg:px-0 lg:items-center">
-          {menuItems.map((item, i) => {
+          {menuItems.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href;
+
             return (
-              <button
-                key={i}
+              <Link
+                key={item.href}
+                href={item.href}
                 onClick={() => setOpen(false)}
                 className={`
                   relative flex items-center gap-3 px-3 lg:px-0 lg:justify-center
                   w-full lg:w-11 h-11 rounded-xl
-                  transition-all duration-200 group
+                  transition-all duration-200
                   ${
-                    item.active
+                    isActive
                       ? "bg-lime-dim text-lime-accent"
                       : "text-content-tertiary hover:text-content-secondary hover:bg-surface-tertiary"
                   }
                 `}
                 title={item.label}
               >
-                {item.active && (
+                {isActive && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-lime-accent hidden lg:block" />
                 )}
-                <Icon size={19} strokeWidth={item.active ? 2.2 : 1.8} />
+                <Icon size={19} strokeWidth={isActive ? 2.2 : 1.8} />
                 <span className="text-[13px] font-medium lg:hidden">{item.label}</span>
-              </button>
+              </Link>
             );
           })}
         </nav>
