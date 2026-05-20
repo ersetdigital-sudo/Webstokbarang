@@ -1,51 +1,56 @@
 "use client";
 
-import { Package, TrendingUp, AlertTriangle, XCircle } from "lucide-react";
+import { Package, TrendingUp, AlertTriangle, XCircle, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { products } from "@/data/products";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 
 interface StatCardProps {
   label: string;
   value: string;
-  badge: string;
+  change: string;
+  trend: "up" | "down";
   badgeType: "success" | "warning" | "danger";
   icon: React.ReactNode;
   accentColor: string;
 }
 
-function StatCard({ label, value, badge, badgeType, icon, accentColor }: StatCardProps) {
+function StatCard({ label, value, change, trend, badgeType, icon, accentColor }: StatCardProps) {
   const badgeStyles = {
-    success: "text-state-success bg-state-success/10",
-    warning: "text-state-warning bg-state-warning/10",
-    danger: "text-state-danger bg-state-danger/10",
+    success: "text-state-success",
+    warning: "text-state-warning",
+    danger: "text-state-danger",
   };
 
   return (
-    <div className="relative bg-surface-secondary border border-line-primary rounded-xl px-4 py-3.5 hover:border-line-secondary transition-all duration-200 group overflow-hidden">
-      {/* Left accent line */}
+    <div className="relative bg-surface-secondary border border-line-primary rounded-2xl p-4 sm:p-5 hover:border-line-secondary hover:bg-surface-secondary/80 transition-all duration-300 group overflow-hidden">
+      {/* Subtle gradient bg on hover */}
       <div
-        className="absolute left-0 top-2.5 bottom-2.5 w-[2.5px] rounded-r-full opacity-60 group-hover:opacity-100 transition-opacity"
-        style={{ backgroundColor: accentColor }}
+        className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 rounded-2xl"
+        style={{ background: `radial-gradient(ellipse at top left, ${accentColor}, transparent 70%)` }}
       />
 
-      {/* Top row: icon + label + badge */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-surface-tertiary flex items-center justify-center">
-            {icon}
-          </div>
-          <span className="text-[11px] font-medium text-content-tertiary uppercase tracking-wide">
-            {label}
-          </span>
+      {/* Header: Icon + Badge */}
+      <div className="flex items-center justify-between mb-4">
+        <div
+          className="w-9 h-9 rounded-xl flex items-center justify-center"
+          style={{ backgroundColor: `${accentColor}12` }}
+        >
+          {icon}
         </div>
-        <span className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded ${badgeStyles[badgeType]}`}>
-          {badge}
-        </span>
+        <div className={`flex items-center gap-0.5 text-[11px] font-mono font-medium ${badgeStyles[badgeType]}`}>
+          {trend === "up" ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+          {change}
+        </div>
       </div>
 
       {/* Value */}
-      <p className="text-[20px] font-heading font-bold text-content-primary pl-9 leading-tight">
+      <p className="text-xl sm:text-2xl font-heading font-bold text-content-primary leading-none mb-1.5 truncate">
         {value}
+      </p>
+
+      {/* Label */}
+      <p className="text-[11px] sm:text-[12px] text-content-tertiary font-medium">
+        {label}
       </p>
     </div>
   );
@@ -61,39 +66,43 @@ export default function StatCards() {
     {
       label: "Total SKU",
       value: formatNumber(totalSKUs),
-      badge: "+3",
+      change: "+3",
+      trend: "up",
       badgeType: "success",
-      icon: <Package size={15} className="text-lime-accent" />,
+      icon: <Package size={17} className="text-lime-accent" />,
       accentColor: "#C6FF80",
     },
     {
-      label: "Total Nilai",
+      label: "Total Nilai Inventaris",
       value: formatCurrency(totalValue),
-      badge: "+12%",
+      change: "+12%",
+      trend: "up",
       badgeType: "success",
-      icon: <TrendingUp size={15} className="text-lime-accent" />,
+      icon: <TrendingUp size={17} className="text-lime-accent" />,
       accentColor: "#C6FF80",
     },
     {
-      label: "Menipis",
+      label: "Stok Menipis",
       value: formatNumber(lowStock),
-      badge: "+2",
+      change: "+2",
+      trend: "up",
       badgeType: "warning",
-      icon: <AlertTriangle size={15} className="text-state-warning" />,
+      icon: <AlertTriangle size={17} className="text-state-warning" />,
       accentColor: "#FFCC66",
     },
     {
-      label: "Habis",
+      label: "Stok Habis",
       value: formatNumber(outOfStock),
-      badge: "+1",
+      change: "+1",
+      trend: "up",
       badgeType: "danger",
-      icon: <XCircle size={15} className="text-state-danger" />,
+      icon: <XCircle size={17} className="text-state-danger" />,
       accentColor: "#FF8080",
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
       {cards.map((card, i) => (
         <StatCard key={i} {...card} />
       ))}
