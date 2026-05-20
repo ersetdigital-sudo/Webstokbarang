@@ -13,18 +13,12 @@ import {
   X,
 } from "lucide-react";
 
-interface NavItem {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-}
-
-const navItems: NavItem[] = [
-  { icon: <LayoutDashboard size={20} />, label: "Dashboard", active: true },
-  { icon: <Package size={20} />, label: "Products" },
-  { icon: <BarChart3 size={20} />, label: "Analytics" },
-  { icon: <Truck size={20} />, label: "Shipments" },
-  { icon: <Settings size={20} />, label: "Settings" },
+const navItems = [
+  { icon: LayoutDashboard, label: "Dashboard", active: true },
+  { icon: Package, label: "Products", active: false },
+  { icon: BarChart3, label: "Analytics", active: false },
+  { icon: Truck, label: "Shipments", active: false },
+  { icon: Settings, label: "Settings", active: false },
 ];
 
 export default function Sidebar() {
@@ -32,70 +26,85 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger button */}
+      {/* Mobile: Hamburger button - always visible on small screens */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 w-10 h-10 flex items-center justify-center rounded-xl bg-background-card border border-border text-text-secondary md:hidden"
+        className="fixed top-4 left-4 z-[100] w-10 h-10 rounded-xl bg-bg-card border border-border-main flex items-center justify-center text-txt-secondary lg:hidden"
         aria-label="Open menu"
       >
         <Menu size={20} />
       </button>
 
-      {/* Mobile overlay */}
+      {/* Mobile: Dark overlay when sidebar is open */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 sidebar-overlay md:hidden"
+          className="fixed inset-0 z-[200] sidebar-overlay lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar panel */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-[72px] bg-background-sidebar border-r border-border flex flex-col items-center py-6 z-[60] transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0`}
+        className={`
+          fixed top-0 left-0 h-screen w-[240px] lg:w-[72px]
+          bg-bg-sidebar border-r border-border-main
+          flex flex-col items-center lg:items-center py-6
+          z-[300] transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0
+        `}
       >
-        {/* Close button on mobile */}
+        {/* Mobile close button */}
         <button
           onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-[-44px] w-9 h-9 flex items-center justify-center rounded-lg bg-background-card border border-border text-text-secondary md:hidden"
+          className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-bg-card border border-border-main flex items-center justify-center text-txt-secondary lg:hidden"
           aria-label="Close menu"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
 
         {/* Logo */}
-        <div className="mb-10 flex items-center justify-center w-10 h-10 rounded-xl bg-accent-lime/10">
+        <div className="mb-10 w-10 h-10 rounded-xl bg-accent-lime-dim flex items-center justify-center">
           <BoxesIcon size={22} className="text-accent-lime" />
         </div>
 
-        {/* Navigation */}
-        <nav className="flex flex-col items-center gap-2 flex-1">
-          {navItems.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => setIsOpen(false)}
-              className={`relative w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-200 group ${
-                item.active
-                  ? "bg-accent-lime/10 text-accent-lime"
-                  : "text-text-muted hover:text-text-secondary hover:bg-white/5"
-              }`}
-              title={item.label}
-            >
-              {item.active && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[1px] w-[3px] h-5 bg-accent-lime rounded-r-full" />
-              )}
-              {item.icon}
-            </button>
-          ))}
+        {/* Navigation items */}
+        <nav className="flex flex-col gap-2 flex-1 w-full px-4 lg:px-0 lg:items-center">
+          {navItems.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={idx}
+                onClick={() => setIsOpen(false)}
+                className={`
+                  relative flex items-center gap-3 lg:justify-center
+                  w-full lg:w-10 h-10 rounded-xl
+                  transition-all duration-200
+                  ${
+                    item.active
+                      ? "bg-accent-lime-dim text-accent-lime"
+                      : "text-txt-muted hover:text-txt-secondary hover:bg-white/5"
+                  }
+                `}
+                title={item.label}
+              >
+                {item.active && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-lime rounded-r-full hidden lg:block" />
+                )}
+                <Icon size={20} className="flex-shrink-0 ml-3 lg:ml-0" />
+                <span className="text-sm font-medium lg:hidden">{item.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Bottom */}
+        {/* Logout */}
         <button
-          className="w-10 h-10 flex items-center justify-center rounded-xl text-text-muted hover:text-status-out hover:bg-status-out/10 transition-all duration-200"
+          className="flex items-center gap-3 lg:justify-center w-full lg:w-10 h-10 rounded-xl text-txt-muted hover:text-status-out hover:bg-red-500/10 transition-all duration-200 px-4 lg:px-0"
           title="Logout"
         >
-          <LogOut size={20} />
+          <LogOut size={20} className="flex-shrink-0 ml-3 lg:ml-0" />
+          <span className="text-sm font-medium lg:hidden">Logout</span>
         </button>
       </aside>
     </>

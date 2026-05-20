@@ -6,8 +6,8 @@ export default function CategoryBreakdown() {
   const maxCount = Math.max(...categories.map((c) => c.count));
 
   return (
-    <div className="bg-background-card border border-border rounded-2xl p-5">
-      <h3 className="font-heading font-semibold text-sm text-text-primary mb-4">
+    <div className="bg-bg-card border border-border-main rounded-2xl p-5">
+      <h3 className="font-heading font-semibold text-sm text-txt-primary mb-4">
         Categories
       </h3>
 
@@ -15,12 +15,8 @@ export default function CategoryBreakdown() {
         {categories.map((category) => (
           <div key={category.name} className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-text-secondary">
-                {category.name}
-              </span>
-              <span className="text-xs font-mono text-text-muted">
-                {category.count}
-              </span>
+              <span className="text-xs text-txt-secondary">{category.name}</span>
+              <span className="text-xs font-mono text-txt-muted">{category.count}</span>
             </div>
             <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
               <div

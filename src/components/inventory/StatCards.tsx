@@ -21,38 +21,36 @@ function StatCard({
   icon,
   accentColor,
 }: StatCardProps) {
-  const changeColors = {
+  const changeStyles = {
     positive: "text-status-active bg-status-active/10",
     negative: "text-status-out bg-status-out/10",
     neutral: "text-status-low bg-status-low/10",
   };
 
   return (
-    <div className="relative bg-background-card border border-border rounded-2xl p-4 md:p-5 flex flex-col gap-3 overflow-hidden group hover:border-border-hover transition-all duration-300">
-      {/* Accent bar on right */}
+    <div className="relative bg-bg-card border border-border-main rounded-2xl p-4 sm:p-5 flex flex-col gap-3 overflow-hidden hover:border-border-hover transition-all duration-300">
+      {/* Accent bar right side */}
       <div
         className="absolute right-0 top-3 bottom-3 w-[3px] rounded-l-full"
         style={{ backgroundColor: accentColor }}
       />
 
-      {/* Header */}
+      {/* Top row: icon + badge */}
       <div className="flex items-center justify-between">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/5">
+        <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center">
           {icon}
         </div>
-        <span
-          className={`text-[10px] md:text-xs font-mono px-2 py-0.5 rounded-full ${changeColors[changeType]}`}
-        >
+        <span className={`text-[10px] sm:text-xs font-mono px-2 py-0.5 rounded-full ${changeStyles[changeType]}`}>
           {change}
         </span>
       </div>
 
-      {/* Content */}
+      {/* Value */}
       <div>
-        <p className="text-text-secondary text-[10px] md:text-xs uppercase tracking-wider mb-1">
+        <p className="text-txt-secondary text-[10px] sm:text-xs uppercase tracking-wider mb-1">
           {title}
         </p>
-        <p className="text-xl md:text-2xl font-heading font-bold text-text-primary">
+        <p className="text-lg sm:text-2xl font-heading font-bold text-txt-primary truncate">
           {value}
         </p>
       </div>
@@ -102,7 +100,7 @@ export default function StatCards() {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {stats.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}
