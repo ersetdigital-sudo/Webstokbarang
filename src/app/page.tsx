@@ -19,29 +19,16 @@ export default function Dashboard() {
 
           <StatCards />
 
-          {/* Baris 1: Tren Chart | Analisa + Peringatan */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-2">
+            <div className="xl:col-span-2 space-y-6">
               <TrendChart />
-            </div>
-            <div className="flex flex-col gap-6">
-              <div className="flex-1">
-                <CategoryBreakdown />
-              </div>
-              <div className="flex-1">
-                <AlertsPanel />
-              </div>
-            </div>
-          </div>
-
-          {/* Baris 2: Transaksi | Barang Terbaru */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-2">
               <RecentTransactions />
             </div>
-            <div>
+            <aside className="space-y-6">
+              <CategoryBreakdown />
+              <AlertsPanel />
               <NewProducts />
-            </div>
+            </aside>
           </div>
         </div>
       </main>
