@@ -8,48 +8,33 @@ import { Bell, User } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="min-h-screen bg-background">
       <Sidebar />
-
-      <main className="lg:ml-16 min-h-screen">
-        {/* Top bar */}
-        <header className="sticky top-0 z-40 bg-bg-primary/80 backdrop-blur-xl border-b border-border px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14">
+      <main className="lg:ml-16 min-h-screen flex flex-col">
+        <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center justify-between h-14 px-4 sm:px-6">
             <div className="w-10 lg:w-0" />
-            <div className="flex items-center gap-1">
-              {/* Notifikasi */}
-              <button className="relative w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors">
-                <Bell size={16} strokeWidth={1.7} />
-                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-red rounded-full" />
+            <div className="flex items-center gap-1.5">
+              <button className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted transition-colors">
+                <Bell size={16} className="text-muted-foreground" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent" />
               </button>
-
-              {/* Toggle theme */}
               <ThemeToggle />
-
-              {/* Avatar profil */}
-              <button className="ml-1 w-8 h-8 rounded-full bg-bg-elevated border border-border hover:border-border-hover flex items-center justify-center transition-colors">
-                <User size={14} className="text-text-secondary" />
+              <button className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <User size={14} className="text-accent" />
               </button>
             </div>
           </div>
         </header>
-
-        {/* Content */}
-        <div className="px-4 sm:px-6 lg:px-8 py-6">
-          <div className="mb-6">
-            <h1 className="text-xl sm:text-2xl font-heading font-bold text-text-primary">Dashboard</h1>
-            <p className="text-[13px] text-text-muted mt-0.5">Pantau inventaris dan stok barang</p>
+        <div className="flex-1 px-4 sm:px-6 py-8 space-y-8">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+            <p className="text-sm text-muted-foreground mt-1">Pantau inventaris dan stok barang kamu.</p>
           </div>
-
-          <div className="flex flex-col xl:flex-row gap-6">
-            <div className="flex-1 min-w-0 space-y-6">
-              <StatCards />
-              <RecentTransactions />
-            </div>
-            <aside className="w-full xl:w-[280px] flex-shrink-0 space-y-4">
-              <CategoryBreakdown />
-              <AlertsPanel />
-            </aside>
+          <StatCards />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <div className="xl:col-span-2"><RecentTransactions /></div>
+            <div className="space-y-6"><CategoryBreakdown /><AlertsPanel /></div>
           </div>
         </div>
       </main>

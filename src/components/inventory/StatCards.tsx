@@ -20,13 +20,13 @@ export default function StatCards() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       {cards.map((c, i) => (
-        <div key={i} className="rounded-lg border border-border bg-card p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-muted-foreground">{c.label}</span>
-            <c.icon size={16} className="text-muted-foreground" />
+        <div key={i} className="rounded-xl border border-border bg-card p-5 hover:border-accent/30 transition-colors">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[13px] text-muted-foreground">{c.label}</span>
+            <c.icon size={16} className="text-muted-foreground/60" />
           </div>
-          <p className="text-2xl font-heading font-bold mt-2">{c.value}</p>
-          <p className="text-xs text-muted-foreground mt-1">{c.sub}</p>
+          <p className="text-[26px] font-semibold tracking-tight leading-none">{c.value}</p>
+          <p className="text-xs text-muted-foreground mt-2">{c.sub}</p>
         </div>
       ))}
     </div>

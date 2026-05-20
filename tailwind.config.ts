@@ -22,15 +22,10 @@ const config: Config = {
         warning: "hsl(var(--warning))",
       },
       fontFamily: {
-        sans: ['"Inter"', "system-ui", "sans-serif"],
-        heading: ['"Space Grotesk"', "sans-serif"],
+        sans: ['"Inter"', "-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "monospace"],
       },
-      borderRadius: {
-        lg: "0.5rem",
-        md: "calc(0.5rem - 2px)",
-        sm: "calc(0.5rem - 4px)",
-      },
+      borderRadius: { xl: "12px", lg: "8px", md: "6px" },
     },
   },
   plugins: [],

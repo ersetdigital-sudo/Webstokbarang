@@ -30,12 +30,8 @@ export default function ThemeToggle() {
   };
 
   return (
-    <button
-      onClick={toggle}
-      className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors"
-      title={dark ? "Mode terang" : "Mode gelap"}
-    >
-      {dark ? <Sun size={16} strokeWidth={1.7} /> : <Moon size={16} strokeWidth={1.7} />}
+    <button onClick={toggle} className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted text-muted-foreground transition-colors" title={dark ? "Mode terang" : "Mode gelap"}>
+      {dark ? <Sun size={16} /> : <Moon size={16} />}
     </button>
   );
 }
