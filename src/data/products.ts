@@ -193,3 +193,91 @@ export const alerts: Alert[] = [
     timestamp: "5 jam lalu",
   },
 ];
+
+
+export type TransactionType = "masuk" | "keluar";
+
+export interface Transaction {
+  id: string;
+  productName: string;
+  sku: string;
+  type: TransactionType;
+  qty: number;
+  date: string;
+  time: string;
+}
+
+export const transactions: Transaction[] = [
+  {
+    id: "t1",
+    productName: "Keyboard Mekanikal RGB",
+    sku: "KMR-3302",
+    type: "keluar",
+    qty: 5,
+    date: "20 Mei 2026",
+    time: "14:32",
+  },
+  {
+    id: "t2",
+    productName: "Headphone Bluetooth Nirkabel",
+    sku: "HBN-4421",
+    type: "masuk",
+    qty: 50,
+    date: "20 Mei 2026",
+    time: "11:15",
+  },
+  {
+    id: "t3",
+    productName: "Kabel Charger USB-C 2m",
+    sku: "KCU-1087",
+    type: "keluar",
+    qty: 20,
+    date: "19 Mei 2026",
+    time: "16:48",
+  },
+  {
+    id: "t4",
+    productName: "SSD Portabel 1TB",
+    sku: "SPT-8847",
+    type: "masuk",
+    qty: 30,
+    date: "19 Mei 2026",
+    time: "09:20",
+  },
+  {
+    id: "t5",
+    productName: "Webcam HD 1080p",
+    sku: "WHD-9901",
+    type: "keluar",
+    qty: 12,
+    date: "18 Mei 2026",
+    time: "15:05",
+  },
+  {
+    id: "t6",
+    productName: "Earbuds Noise Cancelling",
+    sku: "ENC-6633",
+    type: "masuk",
+    qty: 100,
+    date: "18 Mei 2026",
+    time: "10:30",
+  },
+  {
+    id: "t7",
+    productName: "Stop Kontak Pintar 6 Port",
+    sku: "SKP-3378",
+    type: "keluar",
+    qty: 8,
+    date: "17 Mei 2026",
+    time: "13:22",
+  },
+  {
+    id: "t8",
+    productName: "Lampu Meja LED Adjustable",
+    sku: "LML-2294",
+    type: "masuk",
+    qty: 25,
+    date: "17 Mei 2026",
+    time: "08:45",
+  },
+];
