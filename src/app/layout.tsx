@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "StokBarang — Inventory Management",
-  description: "Dashboard manajemen inventaris modern",
+  title: "Inventory Pro — Dashboard",
+  description: "Inventory Pro - Dashboard manajemen inventaris modern",
 };
 
 export default function RootLayout({

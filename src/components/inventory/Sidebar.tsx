@@ -30,7 +30,7 @@ export default function Sidebar() {
           <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
             <Hexagon size={16} className="text-accent" />
           </div>
-          <span className="text-sm font-semibold lg:hidden">StokBarang</span>
+          <span className="text-sm font-semibold lg:hidden">Inventory Pro</span>
           <button onClick={() => setOpen(false)} className="ml-auto lg:hidden text-muted-foreground hover:text-foreground"><X size={16} /></button>
         </div>
 
