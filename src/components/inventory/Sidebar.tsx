@@ -8,104 +8,115 @@ import {
   Truck,
   Settings,
   LogOut,
-  BoxesIcon,
+  Boxes,
   Menu,
   X,
 } from "lucide-react";
 
-const navItems = [
+const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: Package, label: "Products", active: false },
-  { icon: BarChart3, label: "Analytics", active: false },
-  { icon: Truck, label: "Shipments", active: false },
-  { icon: Settings, label: "Settings", active: false },
+  { icon: Package, label: "Produk", active: false },
+  { icon: BarChart3, label: "Analitik", active: false },
+  { icon: Truck, label: "Pengiriman", active: false },
+  { icon: Settings, label: "Pengaturan", active: false },
 ];
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      {/* Mobile: Hamburger button - always visible on small screens */}
+      {/* Tombol menu mobile */}
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-[100] w-10 h-10 rounded-xl bg-bg-card border border-border-main flex items-center justify-center text-txt-secondary lg:hidden"
-        aria-label="Open menu"
+        onClick={() => setOpen(true)}
+        className="fixed top-5 left-5 z-[100] w-11 h-11 rounded-xl bg-surface-secondary border border-line-primary flex items-center justify-center text-content-secondary hover:text-content-primary hover:border-line-secondary transition-all lg:hidden"
+        aria-label="Buka menu"
       >
         <Menu size={20} />
       </button>
 
-      {/* Mobile: Dark overlay when sidebar is open */}
-      {isOpen && (
+      {/* Overlay mobile */}
+      {open && (
         <div
           className="fixed inset-0 z-[200] sidebar-overlay lg:hidden"
-          onClick={() => setIsOpen(false)}
+          onClick={() => setOpen(false)}
         />
       )}
 
-      {/* Sidebar panel */}
+      {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 h-screen w-[240px] lg:w-[72px]
-          bg-bg-sidebar border-r border-border-main
-          flex flex-col items-center lg:items-center py-6
-          z-[300] transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0
+          fixed top-0 left-0 h-screen
+          w-[260px] lg:w-[78px]
+          bg-surface-sidebar border-r border-line-primary
+          flex flex-col py-7 z-[300]
+          transition-transform duration-300 ease-in-out
+          ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
         `}
       >
-        {/* Mobile close button */}
-        <button
-          onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-bg-card border border-border-main flex items-center justify-center text-txt-secondary lg:hidden"
-          aria-label="Close menu"
-        >
-          <X size={16} />
-        </button>
-
-        {/* Logo */}
-        <div className="mb-10 w-10 h-10 rounded-xl bg-accent-lime-dim flex items-center justify-center">
-          <BoxesIcon size={22} className="text-accent-lime" />
+        {/* Header sidebar */}
+        <div className="flex items-center justify-between px-5 lg:justify-center lg:px-0 mb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-lime-dim flex items-center justify-center">
+              <Boxes size={20} className="text-lime-accent" />
+            </div>
+            <span className="font-heading font-bold text-sm text-content-primary lg:hidden">
+              StokBarang
+            </span>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-content-tertiary hover:text-content-primary hover:bg-surface-tertiary transition-all lg:hidden"
+          >
+            <X size={16} />
+          </button>
         </div>
 
-        {/* Navigation items */}
-        <nav className="flex flex-col gap-2 flex-1 w-full px-4 lg:px-0 lg:items-center">
-          {navItems.map((item, idx) => {
+        {/* Label section - mobile only */}
+        <p className="px-5 mb-3 text-[10px] font-medium uppercase tracking-widest text-content-tertiary lg:hidden">
+          Menu
+        </p>
+
+        {/* Navigasi */}
+        <nav className="flex-1 flex flex-col gap-1 px-3 lg:px-0 lg:items-center">
+          {menuItems.map((item, i) => {
             const Icon = item.icon;
             return (
               <button
-                key={idx}
-                onClick={() => setIsOpen(false)}
+                key={i}
+                onClick={() => setOpen(false)}
                 className={`
-                  relative flex items-center gap-3 lg:justify-center
-                  w-full lg:w-10 h-10 rounded-xl
-                  transition-all duration-200
+                  relative flex items-center gap-3 px-3 lg:px-0 lg:justify-center
+                  w-full lg:w-11 h-11 rounded-xl
+                  transition-all duration-200 group
                   ${
                     item.active
-                      ? "bg-accent-lime-dim text-accent-lime"
-                      : "text-txt-muted hover:text-txt-secondary hover:bg-white/5"
+                      ? "bg-lime-dim text-lime-accent"
+                      : "text-content-tertiary hover:text-content-secondary hover:bg-surface-tertiary"
                   }
                 `}
                 title={item.label}
               >
                 {item.active && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent-lime rounded-r-full hidden lg:block" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-lime-accent hidden lg:block" />
                 )}
-                <Icon size={20} className="flex-shrink-0 ml-3 lg:ml-0" />
-                <span className="text-sm font-medium lg:hidden">{item.label}</span>
+                <Icon size={19} strokeWidth={item.active ? 2.2 : 1.8} />
+                <span className="text-[13px] font-medium lg:hidden">{item.label}</span>
               </button>
             );
           })}
         </nav>
 
         {/* Logout */}
-        <button
-          className="flex items-center gap-3 lg:justify-center w-full lg:w-10 h-10 rounded-xl text-txt-muted hover:text-status-out hover:bg-red-500/10 transition-all duration-200 px-4 lg:px-0"
-          title="Logout"
-        >
-          <LogOut size={20} className="flex-shrink-0 ml-3 lg:ml-0" />
-          <span className="text-sm font-medium lg:hidden">Logout</span>
-        </button>
+        <div className="px-3 lg:px-0 lg:flex lg:justify-center">
+          <button
+            className="flex items-center gap-3 px-3 lg:px-0 lg:justify-center w-full lg:w-11 h-11 rounded-xl text-content-tertiary hover:text-state-danger hover:bg-state-danger/10 transition-all"
+            title="Keluar"
+          >
+            <LogOut size={19} strokeWidth={1.8} />
+            <span className="text-[13px] font-medium lg:hidden">Keluar</span>
+          </button>
+        </div>
       </aside>
     </>
   );

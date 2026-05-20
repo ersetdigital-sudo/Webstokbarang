@@ -1,59 +1,48 @@
 "use client";
 
-import { Package, DollarSign, AlertTriangle, XCircle } from "lucide-react";
+import { Package, TrendingUp, AlertTriangle, XCircle } from "lucide-react";
 import { products } from "@/data/products";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 
 interface StatCardProps {
-  title: string;
+  label: string;
   value: string;
-  change: string;
-  changeType: "positive" | "negative" | "neutral";
+  badge: string;
+  badgeType: "success" | "warning" | "danger";
   icon: React.ReactNode;
-  accentColor: string;
+  accent: string;
 }
 
-function StatCard({
-  title,
-  value,
-  change,
-  changeType,
-  icon,
-  accentColor,
-}: StatCardProps) {
-  const changeStyles = {
-    positive: "text-status-active bg-status-active/10",
-    negative: "text-status-out bg-status-out/10",
-    neutral: "text-status-low bg-status-low/10",
+function StatCard({ label, value, badge, badgeType, icon, accent }: StatCardProps) {
+  const badgeStyles = {
+    success: "text-state-success bg-state-success/10",
+    warning: "text-state-warning bg-state-warning/10",
+    danger: "text-state-danger bg-state-danger/10",
   };
 
   return (
-    <div className="relative bg-bg-card border border-border-main rounded-2xl p-4 sm:p-5 flex flex-col gap-3 overflow-hidden hover:border-border-hover transition-all duration-300">
-      {/* Accent bar right side */}
+    <div className="relative bg-surface-secondary border border-line-primary rounded-2xl p-5 hover:border-line-secondary transition-all duration-300 group overflow-hidden">
+      {/* Accent glow top */}
       <div
-        className="absolute right-0 top-3 bottom-3 w-[3px] rounded-l-full"
-        style={{ backgroundColor: accentColor }}
+        className="absolute top-0 left-6 right-6 h-[1px] opacity-40 group-hover:opacity-70 transition-opacity"
+        style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
       />
 
-      {/* Top row: icon + badge */}
-      <div className="flex items-center justify-between">
-        <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center">
+      <div className="flex items-start justify-between mb-4">
+        <div className="w-10 h-10 rounded-xl bg-surface-tertiary flex items-center justify-center">
           {icon}
         </div>
-        <span className={`text-[10px] sm:text-xs font-mono px-2 py-0.5 rounded-full ${changeStyles[changeType]}`}>
-          {change}
+        <span className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded-md ${badgeStyles[badgeType]}`}>
+          {badge}
         </span>
       </div>
 
-      {/* Value */}
-      <div>
-        <p className="text-txt-secondary text-[10px] sm:text-xs uppercase tracking-wider mb-1">
-          {title}
-        </p>
-        <p className="text-lg sm:text-2xl font-heading font-bold text-txt-primary truncate">
-          {value}
-        </p>
-      </div>
+      <p className="text-content-tertiary text-[11px] font-medium uppercase tracking-wider mb-1">
+        {label}
+      </p>
+      <p className="text-2xl font-heading font-bold text-content-primary">
+        {value}
+      </p>
     </div>
   );
 }
@@ -64,45 +53,45 @@ export default function StatCards() {
   const lowStock = products.filter((p) => p.status === "low").length;
   const outOfStock = products.filter((p) => p.status === "out").length;
 
-  const stats: StatCardProps[] = [
+  const cards: StatCardProps[] = [
     {
-      title: "Total SKUs",
+      label: "Total SKU",
       value: formatNumber(totalSKUs),
-      change: "+3 this week",
-      changeType: "positive",
-      icon: <Package size={18} className="text-accent-lime" />,
-      accentColor: "#C6FF80",
+      badge: "+3 minggu ini",
+      badgeType: "success",
+      icon: <Package size={19} className="text-lime-accent" />,
+      accent: "#C6FF80",
     },
     {
-      title: "Total Value",
+      label: "Total Nilai",
       value: formatCurrency(totalValue),
-      change: "+12.5%",
-      changeType: "positive",
-      icon: <DollarSign size={18} className="text-accent-lime" />,
-      accentColor: "#C6FF80",
+      badge: "+12,5%",
+      badgeType: "success",
+      icon: <TrendingUp size={19} className="text-lime-accent" />,
+      accent: "#C6FF80",
     },
     {
-      title: "Low Stock",
+      label: "Stok Menipis",
       value: formatNumber(lowStock),
-      change: "+2 items",
-      changeType: "neutral",
-      icon: <AlertTriangle size={18} className="text-status-low" />,
-      accentColor: "#FFCC66",
+      badge: "+2 barang",
+      badgeType: "warning",
+      icon: <AlertTriangle size={19} className="text-state-warning" />,
+      accent: "#FFCC66",
     },
     {
-      title: "Out of Stock",
+      label: "Stok Habis",
       value: formatNumber(outOfStock),
-      change: "+1 item",
-      changeType: "negative",
-      icon: <XCircle size={18} className="text-status-out" />,
-      accentColor: "#FF8080",
+      badge: "+1 barang",
+      badgeType: "danger",
+      icon: <XCircle size={19} className="text-state-danger" />,
+      accent: "#FF8080",
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      {stats.map((stat, index) => (
-        <StatCard key={index} {...stat} />
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+      {cards.map((card, i) => (
+        <StatCard key={i} {...card} />
       ))}
     </div>
   );

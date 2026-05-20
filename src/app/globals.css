@@ -5,38 +5,41 @@
 @tailwind utilities;
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     background-color: #0d0f12;
     color: #f0f0f0;
     font-family: "Inter", sans-serif;
+    line-height: 1.6;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #13151a;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
     background: #2a2d36;
-    border-radius: 3px;
+    border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -46,8 +49,8 @@
 
 @layer components {
   .sidebar-overlay {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
