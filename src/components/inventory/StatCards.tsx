@@ -2,7 +2,7 @@
 
 import { Package, TrendingUp, AlertTriangle, XCircle } from "lucide-react";
 import { products } from "@/data/products";
-import { formatCurrency, formatNumber } from "@/lib/utils";
+import { formatCurrencyShort, formatNumber } from "@/lib/utils";
 
 interface StatCardProps {
   label: string;
@@ -52,7 +52,7 @@ export default function StatCards() {
     },
     {
       label: "Total Nilai Inventaris",
-      value: formatCurrency(totalValue),
+      value: formatCurrencyShort(totalValue),
       subtext: "+12.5% dari bulan lalu",
       icon: <TrendingUp size={16} />,
     },
