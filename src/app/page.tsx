@@ -3,7 +3,8 @@ import StatCards from "@/components/inventory/StatCards";
 import RecentTransactions from "@/components/inventory/RecentTransactions";
 import CategoryBreakdown from "@/components/inventory/CategoryBreakdown";
 import AlertsPanel from "@/components/inventory/AlertsPanel";
-import { Bell, Moon, User } from "lucide-react";
+import ThemeToggle from "@/components/inventory/ThemeToggle";
+import { Bell, User } from "lucide-react";
 
 export default function Dashboard() {
   return (
@@ -23,9 +24,7 @@ export default function Dashboard() {
               </button>
 
               {/* Toggle theme */}
-              <button className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors">
-                <Moon size={16} strokeWidth={1.7} />
-              </button>
+              <ThemeToggle />
 
               {/* Avatar profil */}
               <button className="ml-1 w-8 h-8 rounded-full bg-bg-elevated border border-border hover:border-border-hover flex items-center justify-center transition-colors">
