@@ -4,7 +4,6 @@ import TrendChart from "@/components/inventory/TrendChart";
 import RecentTransactions from "@/components/inventory/RecentTransactions";
 import CategoryBreakdown from "@/components/inventory/CategoryBreakdown";
 import AlertsPanel from "@/components/inventory/AlertsPanel";
-import NewProducts from "@/components/inventory/NewProducts";
 
 export default function Dashboard() {
   return (
@@ -27,7 +26,6 @@ export default function Dashboard() {
             <aside className="space-y-6">
               <CategoryBreakdown />
               <AlertsPanel />
-              <NewProducts />
             </aside>
           </div>
         </div>
