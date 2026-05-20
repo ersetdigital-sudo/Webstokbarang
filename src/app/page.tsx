@@ -3,7 +3,7 @@ import StatCards from "@/components/inventory/StatCards";
 import RecentTransactions from "@/components/inventory/RecentTransactions";
 import CategoryBreakdown from "@/components/inventory/CategoryBreakdown";
 import AlertsPanel from "@/components/inventory/AlertsPanel";
-import { Search, Plus } from "lucide-react";
+import { Bell, Moon, User } from "lucide-react";
 
 export default function Dashboard() {
   return (
@@ -13,20 +13,23 @@ export default function Dashboard() {
       <main className="lg:ml-16 min-h-screen">
         {/* Top bar */}
         <header className="sticky top-0 z-40 bg-bg-primary/80 backdrop-blur-xl border-b border-border px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-14">
             <div className="w-10 lg:w-0" />
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
-                <input
-                  type="text"
-                  placeholder="Cari barang..."
-                  className="w-40 sm:w-52 pl-8 pr-3 py-2 bg-bg-card border border-border rounded-lg text-[12px] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent/40 transition-colors"
-                />
-              </div>
-              <button className="flex items-center gap-1.5 px-3 py-2 bg-accent text-bg-primary rounded-lg text-[12px] font-semibold hover:brightness-110 active:scale-95 transition-all">
-                <Plus size={14} strokeWidth={2.5} />
-                <span className="hidden sm:inline">Tambah</span>
+            <div className="flex items-center gap-1">
+              {/* Notifikasi */}
+              <button className="relative w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors">
+                <Bell size={16} strokeWidth={1.7} />
+                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-red rounded-full" />
+              </button>
+
+              {/* Toggle theme */}
+              <button className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-hover transition-colors">
+                <Moon size={16} strokeWidth={1.7} />
+              </button>
+
+              {/* Avatar profil */}
+              <button className="ml-1 w-8 h-8 rounded-full bg-bg-elevated border border-border hover:border-border-hover flex items-center justify-center transition-colors">
+                <User size={14} className="text-text-secondary" />
               </button>
             </div>
           </div>
