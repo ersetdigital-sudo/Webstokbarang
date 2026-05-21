@@ -16,15 +16,17 @@ export default function Dashboard() {
             <p className="text-sm text-neo-muted mt-1">Pantau inventaris dan stok barang kamu.</p>
           </div>
           <StatCards />
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-2 space-y-6">
-              <TrendChart />
-              <RecentTransactions />
-            </div>
-            <aside className="space-y-6">
-              <CategoryBreakdown />
-              <AlertsPanel />
-            </aside>
+
+          {/* Baris 1: Tren Transaksi + Analisa Penjualan — sejajar */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <TrendChart />
+            <CategoryBreakdown />
+          </div>
+
+          {/* Baris 2: Transaksi Terbaru + Peringatan — sejajar */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <RecentTransactions />
+            <AlertsPanel />
           </div>
         </div>
       </main>
