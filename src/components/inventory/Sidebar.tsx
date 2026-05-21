@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, BarChart3, Truck, Settings, LogOut, Hexagon, Menu, X } from "lucide-react";
+import { LayoutDashboard, Package, BarChart3, Truck, Settings, LogOut, Hexagon, Menu, X, ArrowLeftRight } from "lucide-react";
 
 const nav = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   { icon: Package, label: "Produk", href: "/produk" },
+  { icon: ArrowLeftRight, label: "Transaksi", href: "/transaksi/baru" },
   { icon: BarChart3, label: "Analitik", href: "/analitik" },
   { icon: Truck, label: "Pengiriman", href: "/pengiriman" },
   { icon: Settings, label: "Pengaturan", href: "/pengaturan" },
@@ -39,7 +40,7 @@ export default function Sidebar() {
         <div className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
           <p className="px-3 mb-2 text-[10px] font-medium uppercase tracking-widest text-zinc-600">Menu</p>
           {nav.map(({ icon: Icon, label, href }) => {
-            const active = path === href;
+            const active = path === href || path.startsWith(href + "/") || (href !== "/" && path.startsWith(href));
             return (
               <Link key={href} href={href} onClick={() => setOpen(false)} className={`flex items-center gap-3 px-3 h-9 rounded-lg text-[13px] font-medium transition-colors ${active ? "bg-indigo-500/10 text-indigo-400" : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"}`}>
                 <Icon size={16} strokeWidth={active ? 2 : 1.5} />
