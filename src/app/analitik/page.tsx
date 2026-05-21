@@ -6,18 +6,18 @@ import Sidebar from "@/components/inventory/Sidebar";
 
 export default function AnalitikPage() {
   return (
-    <div className="min-h-screen bg-[#1a1023]">
+    <div className="min-h-screen bg-neo-bg">
       <Sidebar />
       <main className="lg:ml-[200px] min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-2xl bg-[#E8C848]/15 flex items-center justify-center mx-auto mb-5">
-            <BarChart3 size={28} className="text-[#E8C848]" />
+        <div className="text-center max-w-sm">
+          <div className="w-16 h-16 rounded-neo-sm bg-neo-primary/10 border-2 border-neo-primary/30 flex items-center justify-center mx-auto mb-5">
+            <BarChart3 size={28} className="text-neo-primary" />
           </div>
-          <h1 className="text-2xl font-bold text-[#faf5ff] mb-2">Analitik</h1>
-          <p className="text-[13px] text-[#faf5ff]/40 mb-6 leading-relaxed">
+          <h1 className="text-2xl font-extrabold text-neo-text mb-2">Analitik</h1>
+          <p className="text-[13px] text-neo-muted font-medium mb-6 leading-relaxed">
             Halaman analitik sedang dalam pengembangan. Grafik dan statistik lengkap akan tersedia di sini.
           </p>
-          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2.5 glass rounded-xl text-[13px] text-[#faf5ff]/70 hover:text-[#faf5ff] transition-all">
+          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-neo-xs border-2 border-neo-border bg-neo-card text-[13px] font-semibold text-neo-subtle hover:text-neo-text hover:border-neo-primary hover:shadow-neo-sm hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
             <ArrowLeft size={14} />
             Kembali ke Dashboard
           </Link>

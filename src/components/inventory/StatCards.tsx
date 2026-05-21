@@ -11,24 +11,27 @@ export default function StatCards() {
   const out = products.filter((p) => p.status === "out").length;
 
   const cards = [
-    { label: "Total SKU", value: formatNumber(total), sub: "+3 minggu ini", icon: Package, border: "border-l-[#E8C848]", iconBg: "bg-[#E8C848]/15", iconColor: "text-[#E8C848]" },
-    { label: "Nilai Inventaris", value: formatCurrency(value), sub: "+12% bulan ini", icon: TrendingUp, border: "border-l-[#E8C848]", iconBg: "bg-[#E8C848]/15", iconColor: "text-[#E8C848]" },
-    { label: "Stok Menipis", value: formatNumber(low), sub: "Perlu restock", icon: AlertTriangle, border: "border-l-[#FB923C]", iconBg: "bg-[#FB923C]/15", iconColor: "text-[#FB923C]" },
-    { label: "Stok Habis", value: formatNumber(out), sub: `${out} barang kosong`, icon: Ban, border: "border-l-[#F43F5E]", iconBg: "bg-[#F43F5E]/15", iconColor: "text-[#F43F5E]" },
+    { label: "Total SKU", value: formatNumber(total), sub: "+3 minggu ini", icon: Package, color: "neo-primary", borderColor: "border-neo-primary" },
+    { label: "Nilai Inventaris", value: formatCurrency(value), sub: "+12% bulan ini", icon: TrendingUp, color: "neo-primary", borderColor: "border-neo-primary" },
+    { label: "Stok Menipis", value: formatNumber(low), sub: "Perlu restock", icon: AlertTriangle, color: "neo-warning", borderColor: "border-neo-warning" },
+    { label: "Stok Habis", value: formatNumber(out), sub: `${out} barang kosong`, icon: Ban, color: "neo-danger", borderColor: "border-neo-danger" },
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       {cards.map((c, i) => (
-        <div key={i} className={`glass rounded-xl px-4 py-3.5 border-l-2 ${c.border} hover:bg-[#faf5ff]/[0.05] transition-all duration-200`}>
+        <div
+          key={i}
+          className={`neo-card-flat px-4 py-4 border-l-4 ${c.borderColor} hover:shadow-neo-sm hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150`}
+        >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-medium text-[#faf5ff]/40 uppercase tracking-wider">{c.label}</span>
-            <div className={`w-7 h-7 rounded-lg ${c.iconBg} flex items-center justify-center`}>
-              <c.icon size={13} className={c.iconColor} />
+            <span className="text-[11px] font-bold text-neo-muted uppercase tracking-[0.12em]">{c.label}</span>
+            <div className={`w-8 h-8 rounded-neo-xs bg-${c.color}/10 border border-${c.color}/30 flex items-center justify-center`}>
+              <c.icon size={14} className={`text-${c.color}`} />
             </div>
           </div>
-          <p className="text-xl font-bold text-[#faf5ff] tracking-tight leading-none truncate">{c.value}</p>
-          <p className="text-[11px] text-[#faf5ff]/30 mt-2">{c.sub}</p>
+          <p className="text-[22px] font-extrabold text-neo-text tracking-tight leading-none truncate">{c.value}</p>
+          <p className="text-[11px] text-neo-muted mt-2 font-medium">{c.sub}</p>
         </div>
       ))}
     </div>

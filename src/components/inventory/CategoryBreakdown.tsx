@@ -17,25 +17,28 @@ export default function CategoryBreakdown() {
   const maxSold = topProducts[0].sold;
 
   return (
-    <div className="glass-strong rounded-xl p-5">
+    <div className="neo-card-flat p-5">
       <div className="mb-5">
-        <h3 className="text-sm font-semibold text-[#faf5ff]">Analisa Penjualan</h3>
-        <p className="text-[11px] text-[#faf5ff]/35 mt-0.5">Top 10 produk terlaris</p>
+        <h3 className="text-sm font-bold text-neo-text">Analisa Penjualan</h3>
+        <p className="text-[11px] text-neo-muted mt-0.5 font-medium">Top 10 produk terlaris</p>
       </div>
-      <div className="space-y-2.5">
+      <div className="space-y-3">
         {topProducts.map((p, i) => {
-          const opacity = 1 - (i * 0.08);
+          const pct = (p.sold / maxSold) * 100;
           return (
-            <div key={p.sku} className="space-y-1">
-              <div className="flex items-center justify-between">
+            <div key={p.sku}>
+              <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[11px] font-mono text-[#faf5ff]/20 w-5">{i + 1}.</span>
-                  <span className="text-xs text-[#faf5ff]/75 truncate">{p.name}</span>
+                  <span className="text-[11px] font-mono font-bold text-neo-muted w-5">{i + 1}.</span>
+                  <span className="text-[12px] font-semibold text-neo-subtle truncate">{p.name}</span>
                 </div>
-                <span className="text-[11px] font-mono text-[#faf5ff] font-medium ml-2">{p.sold}</span>
+                <span className="text-[11px] font-mono font-bold text-neo-text ml-2">{p.sold}</span>
               </div>
-              <div className="h-1.5 rounded-full bg-[#faf5ff]/[0.04] overflow-hidden ml-7">
-                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(p.sold / maxSold) * 100}%`, background: `rgba(232,200,72,${opacity * 0.7})` }} />
+              <div className="h-2 rounded-full bg-neo-bg border border-neo-border overflow-hidden ml-7">
+                <div
+                  className="h-full rounded-full bg-neo-primary transition-all duration-500"
+                  style={{ width: `${pct}%`, opacity: 1 - i * 0.07 }}
+                />
               </div>
             </div>
           );
