@@ -45,7 +45,7 @@ export default function ProdukPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <Sidebar />
-      <main className="lg:ml-16 min-h-screen">
+      <main className="lg:ml-[200px] min-h-screen">
         <div className="px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
           {/* Hero Banner */}
