@@ -19,8 +19,8 @@ export default function CategoryBreakdown() {
   return (
     <div className="glass-strong rounded-xl p-5">
       <div className="mb-5">
-        <h3 className="text-sm font-semibold text-white">Analisa Penjualan</h3>
-        <p className="text-[11px] text-white/40 mt-0.5">Top 10 produk terlaris</p>
+        <h3 className="text-sm font-semibold text-[#faf5ff]">Analisa Penjualan</h3>
+        <p className="text-[11px] text-[#faf5ff]/35 mt-0.5">Top 10 produk terlaris</p>
       </div>
       <div className="space-y-2.5">
         {topProducts.map((p, i) => {
@@ -29,13 +29,13 @@ export default function CategoryBreakdown() {
             <div key={p.sku} className="space-y-1">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[11px] font-mono text-white/25 w-5">{i + 1}.</span>
-                  <span className="text-xs text-white/80 truncate">{p.name}</span>
+                  <span className="text-[11px] font-mono text-[#faf5ff]/20 w-5">{i + 1}.</span>
+                  <span className="text-xs text-[#faf5ff]/75 truncate">{p.name}</span>
                 </div>
-                <span className="text-[11px] font-mono text-white font-medium ml-2">{p.sold}</span>
+                <span className="text-[11px] font-mono text-[#faf5ff] font-medium ml-2">{p.sold}</span>
               </div>
-              <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden ml-7">
-                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(p.sold / maxSold) * 100}%`, background: `rgba(24,86,255,${opacity * 0.8})` }} />
+              <div className="h-1.5 rounded-full bg-[#faf5ff]/[0.04] overflow-hidden ml-7">
+                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(p.sold / maxSold) * 100}%`, background: `rgba(232,200,72,${opacity * 0.7})` }} />
               </div>
             </div>
           );
