@@ -7,7 +7,7 @@ import AlertsPanel from "@/components/inventory/AlertsPanel";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#070b0e]">
       <Sidebar />
       <main className="lg:ml-[200px] min-h-screen">
         <div className="px-4 sm:px-6 lg:px-8 py-8 space-y-6">

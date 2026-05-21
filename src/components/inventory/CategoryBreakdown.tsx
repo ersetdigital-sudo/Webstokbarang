@@ -17,7 +17,7 @@ export default function CategoryBreakdown() {
   const maxSold = topProducts[0].sold;
 
   return (
-    <div className="bg-gradient-to-br from-[#131313] to-[#0f0f0f] border border-white/[0.07] rounded-xl p-5">
+    <div className="bg-gradient-to-br from-[#0c1015] to-[#080c0f] border border-white/[0.07] rounded-xl p-5">
       <div className="flex items-center justify-between mb-5">
         <div>
           <h3 className="text-sm font-semibold text-white leading-relaxed">Analisa Penjualan</h3>
@@ -26,7 +26,7 @@ export default function CategoryBreakdown() {
       </div>
       <div className="space-y-2.5">
         {topProducts.map((p, i) => {
-          const intensity = 1 - (i * 0.07);
+          const intensity = 1 - (i * 0.08);
           return (
             <div key={p.sku} className="space-y-1">
               <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ export default function CategoryBreakdown() {
                   className="h-full rounded-full transition-all duration-500"
                   style={{
                     width: `${(p.sold / maxSold) * 100}%`,
-                    background: `linear-gradient(90deg, rgba(99,102,241,${intensity * 0.9}), rgba(129,140,248,${intensity * 0.6}))`,
+                    background: `linear-gradient(90deg, rgba(6,182,212,${intensity * 0.9}), rgba(45,212,191,${intensity * 0.6}))`,
                   }}
                 />
               </div>
