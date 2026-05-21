@@ -1,31 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  * { border-color: rgba(255,255,255,0.07); box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background-color: #070b0e;
+    background: #0a0e14;
     color: #f0f0f0;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", -apple-system, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
 }
 
 @layer components {
-  .overlay-blur {
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+  .glass {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
   }
+  .glass-strong {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .overlay-blur {
+    background: rgba(10,14,20,0.85);
+    backdrop-filter: blur(16px);
+  }
+  .glow-blue { box-shadow: 0 0 20px -5px rgba(24,86,255,0.3); }
+  .glow-green { box-shadow: 0 0 20px -5px rgba(7,202,107,0.3); }
+  .glow-orange { box-shadow: 0 0 20px -5px rgba(232,149,88,0.3); }
+  .glow-red { box-shadow: 0 0 20px -5px rgba(234,33,67,0.3); }
 }
 
 @keyframes slideUp {
