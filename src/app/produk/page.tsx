@@ -40,6 +40,8 @@ export default function ProdukPage() {
       return 0;
     });
 
+  const totalValue = filtered.reduce((s, p) => s + p.price * p.stock, 0);
+
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <Sidebar />
@@ -81,7 +83,6 @@ export default function ProdukPage() {
 
           {/* Toolbar */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            {/* Search */}
             <div className="relative flex-1">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input
@@ -92,15 +93,9 @@ export default function ProdukPage() {
                 className="w-full pl-9 pr-4 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-white placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/40 transition-colors"
               />
             </div>
-
-            {/* Sort */}
             <div className="relative">
               <ArrowUpDown size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                className="appearance-none pl-8 pr-8 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer"
-              >
+              <select value={sort} onChange={(e) => setSort(e.target.value)} className="appearance-none pl-8 pr-8 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer">
                 <option value="name-asc">Nama (A-Z)</option>
                 <option value="name-desc">Nama (Z-A)</option>
                 <option value="price-asc">Harga (Rendah)</option>
@@ -109,83 +104,54 @@ export default function ProdukPage() {
                 <option value="stock-desc">Stok (Banyak)</option>
               </select>
             </div>
-
-            {/* Category */}
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="appearance-none px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer"
-            >
+            <select value={category} onChange={(e) => setCategory(e.target.value)} className="appearance-none px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer">
               {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-
-            {/* Status */}
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="appearance-none px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer"
-            >
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="appearance-none px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-indigo-500/40 transition-colors cursor-pointer">
               {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
 
-          {/* Table */}
-          <div className="bg-gradient-to-br from-[#131313] to-[#0f0f0f] border border-white/[0.07] rounded-xl overflow-hidden">
-            {/* Table header info */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.07]">
-              <span className="text-[12px] text-zinc-400">{filtered.length} produk ditemukan</span>
-            </div>
-
-            {/* Desktop table */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/[0.05]">
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Produk</th>
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">SKU</th>
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Kategori</th>
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Stok</th>
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Harga</th>
-                    <th className="text-left px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Status</th>
-                    <th className="text-right px-5 py-3 text-[11px] font-medium text-zinc-500 uppercase tracking-wider">Aksi</th>
+          {/* Spreadsheet Table - Desktop */}
+          <div className="hidden md:block border border-white/10 rounded-none overflow-hidden">
+            <div className="overflow-x-auto max-h-[600px] overflow-y-auto relative">
+              <table className="w-full border-collapse">
+                <thead className="sticky top-0 z-10">
+                  <tr className="bg-zinc-800">
+                    <th className="border border-white/10 w-[48px] px-2 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">No</th>
+                    <th className="border border-white/10 w-[110px] px-3 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">SKU</th>
+                    <th className="border border-white/10 px-3 py-2.5 text-left text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Nama Produk</th>
+                    <th className="border border-white/10 w-[120px] px-3 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Kategori</th>
+                    <th className="border border-white/10 w-[80px] px-3 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Stok</th>
+                    <th className="border border-white/10 w-[140px] px-3 py-2.5 text-right text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Harga</th>
+                    <th className="border border-white/10 w-[110px] px-3 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Status</th>
+                    <th className="border border-white/10 w-[80px] px-3 py-2.5 text-center text-[11px] font-bold text-zinc-400 uppercase tracking-wide">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.04]">
-                  {filtered.map((p) => {
-                    const initials = p.name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+                <tbody>
+                  {filtered.map((p, idx) => {
                     const st = statusConfig[p.status];
+                    const isEven = idx % 2 === 1;
                     return (
-                      <tr key={p.id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="px-5 py-3.5">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-                              <span className="text-[11px] font-mono font-bold text-indigo-400">{initials}</span>
-                            </div>
-                            <div>
-                              <p className="text-[13px] font-medium text-zinc-200 leading-relaxed">{p.name}</p>
-                              <p className="text-[11px] text-zinc-500">{p.category}</p>
-                            </div>
-                          </div>
+                      <tr key={p.id} className={`${isEven ? "bg-zinc-900/40" : "bg-zinc-950"} hover:bg-indigo-900/20 transition-colors`}>
+                        <td className="border border-white/10 px-2 py-2 text-center text-xs text-zinc-500">{idx + 1}</td>
+                        <td className="border border-white/10 px-3 py-2 text-center font-mono text-xs text-zinc-300">{p.sku}</td>
+                        <td className="border border-white/10 px-3 py-2 text-left">
+                          <p className="text-[13px] text-zinc-200 leading-snug">{p.name}</p>
                         </td>
-                        <td className="px-5 py-3.5">
-                          <span className="text-[11px] font-mono text-zinc-400 bg-zinc-800/50 px-2 py-0.5 rounded">{p.sku}</span>
+                        <td className="border border-white/10 px-3 py-2 text-center text-xs text-zinc-400">{p.category}</td>
+                        <td className="border border-white/10 px-3 py-2 text-center font-mono text-xs text-zinc-300">{p.stock}</td>
+                        <td className="border border-white/10 px-3 py-2 text-right font-mono text-xs text-zinc-300">{formatCurrency(p.price)}</td>
+                        <td className="border border-white/10 px-3 py-2 text-center">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${st.cls}`}>{st.label}</span>
                         </td>
-                        <td className="px-5 py-3.5 text-[13px] text-zinc-400">{p.category}</td>
-                        <td className="px-5 py-3.5">
-                          <span className="text-[13px] font-mono text-zinc-300">{p.stock}</span>
-                          <span className="text-[11px] text-zinc-600">/{p.maxStock}</span>
-                        </td>
-                        <td className="px-5 py-3.5 text-[13px] font-mono text-zinc-300">{formatCurrency(p.price)}</td>
-                        <td className="px-5 py-3.5">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium ${st.cls}`}>{st.label}</span>
-                        </td>
-                        <td className="px-5 py-3.5 text-right">
-                          <div className="flex items-center justify-end gap-1">
-                            <button className="w-7 h-7 rounded-md flex items-center justify-center text-zinc-500 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors">
-                              <Pencil size={13} />
+                        <td className="border border-white/10 px-3 py-2 text-center">
+                          <div className="flex items-center justify-center gap-1">
+                            <button className="w-6 h-6 rounded flex items-center justify-center text-zinc-500 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors">
+                              <Pencil size={12} />
                             </button>
-                            <button className="w-7 h-7 rounded-md flex items-center justify-center text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
-                              <Trash2 size={13} />
+                            <button className="w-6 h-6 rounded flex items-center justify-center text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                              <Trash2 size={12} />
                             </button>
                           </div>
                         </td>
@@ -193,43 +159,58 @@ export default function ProdukPage() {
                     );
                   })}
                 </tbody>
+                {/* Footer */}
+                <tfoot className="sticky bottom-0 z-10">
+                  <tr className="bg-zinc-800 border-t-2 border-white/20">
+                    <td colSpan={4} className="border border-white/10 px-3 py-2.5 text-[12px] font-medium text-zinc-300">
+                      Total: {filtered.length} produk
+                    </td>
+                    <td className="border border-white/10 px-3 py-2.5 text-center font-mono text-[12px] font-medium text-zinc-300">
+                      {filtered.reduce((s, p) => s + p.stock, 0)}
+                    </td>
+                    <td className="border border-white/10 px-3 py-2.5 text-right font-mono text-[12px] font-medium text-zinc-300">
+                      {formatCurrency(totalValue)}
+                    </td>
+                    <td colSpan={2} className="border border-white/10 px-3 py-2.5 text-center text-[11px] text-zinc-500">
+                      Total Nilai Inventaris
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
+          </div>
 
-            {/* Mobile cards */}
-            <div className="md:hidden divide-y divide-white/[0.04]">
-              {filtered.map((p) => {
-                const initials = p.name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
-                const st = statusConfig[p.status];
-                return (
-                  <div key={p.id} className="px-4 py-4 hover:bg-white/[0.02] transition-colors">
-                    <div className="flex items-start gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-                        <span className="text-[11px] font-mono font-bold text-indigo-400">{initials}</span>
+          {/* Mobile cards */}
+          <div className="md:hidden space-y-2">
+            {filtered.map((p, idx) => {
+              const st = statusConfig[p.status];
+              return (
+                <div key={p.id} className="bg-[#111111] border border-white/[0.07] rounded-lg px-4 py-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] font-mono text-zinc-500">#{idx + 1}</span>
+                        <span className="text-[10px] font-mono text-zinc-400 bg-zinc-800/50 px-1.5 py-0.5 rounded">{p.sku}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[13px] font-medium text-zinc-200 truncate">{p.name}</p>
-                        <p className="text-[11px] font-mono text-zinc-500">{p.sku}</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium ${st.cls}`}>{st.label}</span>
-                          <span className="text-[11px] text-zinc-500">{p.category}</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[13px] font-mono text-zinc-300">{formatCurrency(p.price)}</p>
-                        <p className="text-[11px] text-zinc-500 mt-0.5">Stok: {p.stock}</p>
+                      <p className="text-[13px] font-medium text-zinc-200 truncate">{p.name}</p>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${st.cls}`}>{st.label}</span>
+                        <span className="text-[11px] text-zinc-500">{p.category}</span>
                       </div>
                     </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-[13px] font-mono text-zinc-300">{formatCurrency(p.price)}</p>
+                      <p className="text-[11px] text-zinc-500 mt-0.5">Stok: {p.stock}</p>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Footer */}
-            {filtered.length === 0 && (
-              <div className="px-5 py-12 text-center text-zinc-500 text-sm">Tidak ada produk ditemukan</div>
-            )}
+                </div>
+              );
+            })}
           </div>
+
+          {filtered.length === 0 && (
+            <div className="py-12 text-center text-zinc-500 text-sm">Tidak ada produk ditemukan</div>
+          )}
         </div>
       </main>
     </div>
