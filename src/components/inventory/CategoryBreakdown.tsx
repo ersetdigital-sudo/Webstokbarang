@@ -15,14 +15,21 @@ const topProducts = [
 
 export default function CategoryBreakdown() {
   const maxSold = topProducts[0].sold;
+  const totalSold = topProducts.reduce((s, p) => s + p.sold, 0);
 
   return (
-    <div className="neo-card-flat p-5">
-      <div className="mb-5">
-        <h3 className="text-sm font-bold text-neo-text">Analisa Penjualan</h3>
-        <p className="text-[11px] text-neo-muted mt-0.5 font-medium">Top 10 produk terlaris</p>
+    <div className="neo-card-flat overflow-hidden">
+      {/* Header — same structure as TrendChart */}
+      <div className="flex items-center justify-between px-5 py-4 border-b-2 border-neo-border">
+        <div>
+          <h2 className="text-sm font-bold text-neo-text">Analisa Penjualan</h2>
+          <p className="text-[11px] text-neo-muted mt-0.5">Top 10 produk terlaris</p>
+        </div>
+        <span className="text-[11px] font-mono font-bold text-neo-primary">{totalSold} terjual</span>
       </div>
-      <div className="space-y-3">
+
+      {/* Content */}
+      <div className="px-5 py-4 space-y-3">
         {topProducts.map((p, i) => {
           const pct = (p.sold / maxSold) * 100;
           return (
@@ -35,10 +42,7 @@ export default function CategoryBreakdown() {
                 <span className="text-[11px] font-mono font-bold text-neo-text ml-2">{p.sold}</span>
               </div>
               <div className="h-2 rounded-full bg-neo-bg border border-neo-border overflow-hidden ml-7">
-                <div
-                  className="h-full rounded-full bg-neo-primary transition-all duration-500"
-                  style={{ width: `${pct}%`, opacity: 1 - i * 0.07 }}
-                />
+                <div className="h-full rounded-full bg-neo-primary transition-all duration-500" style={{ width: `${pct}%`, opacity: 1 - i * 0.07 }} />
               </div>
             </div>
           );
